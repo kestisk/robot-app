@@ -1,4 +1,4 @@
-import {Position} from "./type";
+import {Position} from "./types";
 
 export const getNextDirection = (turnPosition: String, direction: string) => {
     const directions = ['N', 'E', 'S', 'W', 'N'];
@@ -39,11 +39,12 @@ export const calculateRobotPosition = (instructions: string[], robotPosition: Po
     instructions.forEach((value: string) => {
         if (value === 'F') {
             const newPosition = getNextPosition(direction, robotPosition)
-            if (validateRectangularWorld(newPosition, upperRightCoordinate)) {
+            if (validateRectangularWorld(newPosition, upperRightCoordinate)||robotPosition.isLost) {
                 robotPosition.X = newPosition.X;
                 robotPosition.Y = newPosition.Y;
             } else {
-                const isExistedLostPoint = lostCordinates && !!lostCordinates.findIndex(coordinate => coordinate === newPosition);
+                const isExistedLostPoint = lostCordinates && !lostCordinates.findIndex(coordinate => (coordinate.X === newPosition.X)&&(coordinate.Y===newPosition.Y));
+               debugger
                 if (!isExistedLostPoint) {
                     robotPosition = {...newPosition, isLost: true};
                     const lost = lostCordinates ? [newPosition, ...lostCordinates] : [newPosition];
@@ -56,4 +57,18 @@ export const calculateRobotPosition = (instructions: string[], robotPosition: Po
         }
     })
     return {robotPosition, direction};
+}
+
+export const validateInputs = (rectangularWorld: string[], initialPosition: string[], instruction: string[]) => {
+    if (rectangularWorld.length < 2 || initialPosition.length < 3 || instruction.length < 1) {
+        return false
+    }
+    return true
+}
+
+export const InputFormatter = (instructionInput: string, initialPositionInput: string, rectangularWorldInput: string) => {
+    const instruction = instructionInput.toUpperCase().split('');
+    const initialPosition = initialPositionInput.toUpperCase().trim().split(/\s+/);
+    const rectangularWorld = rectangularWorldInput.trim().split(/\s+/);
+    return {instruction, initialPosition, rectangularWorld}
 }
