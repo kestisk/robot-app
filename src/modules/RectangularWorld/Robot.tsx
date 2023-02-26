@@ -45,7 +45,7 @@ function Robot() {
     }
     return (
         <div style={{margin: 20}}>
-            <span style={{color: 'red'}}>please enter values below then calculate button will be enabled.
+            <span style={{color: 'red'}}>Please enter values below then calculate button will be enabled.
             </span>
             <div>
                 Upper-Right coordinates of the rectangular world such as (5 3)
@@ -54,7 +54,7 @@ function Robot() {
                                  onChange={setRectangularWorldInput}/>
                 </div>
                 <div>
-                    Robot positions such as (1 1 E)
+                    Robot position such as (1 1 E)
                     <CustomInput type={InputEnum.Coordinate} style={{width: 150}} value={initialPositionInput}
                                  onChange={setInitialPositionInput}/>
                 </div>

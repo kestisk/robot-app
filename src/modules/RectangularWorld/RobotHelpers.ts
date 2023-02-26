@@ -39,12 +39,11 @@ export const calculateRobotPosition = (instructions: string[], robotPosition: Po
     instructions.forEach((value: string) => {
         if (value === 'F') {
             const newPosition = getNextPosition(direction, robotPosition)
-            if (validateRectangularWorld(newPosition, upperRightCoordinate)||robotPosition.isLost) {
+            if (validateRectangularWorld(newPosition, upperRightCoordinate) || robotPosition.isLost) {
                 robotPosition.X = newPosition.X;
                 robotPosition.Y = newPosition.Y;
             } else {
-                const isExistedLostPoint = lostCordinates && !lostCordinates.findIndex(coordinate => (coordinate.X === newPosition.X)&&(coordinate.Y===newPosition.Y));
-               debugger
+                const isExistedLostPoint = lostCordinates && !lostCordinates.findIndex(coordinate => (coordinate.X === newPosition.X) && (coordinate.Y === newPosition.Y));
                 if (!isExistedLostPoint) {
                     robotPosition = {...newPosition, isLost: true};
                     const lost = lostCordinates ? [newPosition, ...lostCordinates] : [newPosition];
